@@ -1,0 +1,6 @@
+#npm packages
+node_modules/
+
+private_key.ppk
+pub_key
+
