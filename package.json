@@ -1,0 +1,17 @@
+{
+  "name": "seve_peak_track",
+  "version": "1.0.0",
+  "description": "Vehicle tracking system will track the vehicle location every 10 seconds through GPS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Soliman Faragy",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.7",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
