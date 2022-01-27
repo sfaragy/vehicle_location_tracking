@@ -3,18 +3,13 @@
     "host_config": {
         "host": "localhost",
         "port": 2000
-    }
+    },
 
-    // "Customer": {
-    //   "dbConfig": {
-    //     "host": "localhost",
-    //     "port": 5984,
-    //     "dbName": "customers"
-    //   },
-    //   "credit": {
-    //     "initialLimit": 100,
-    //     // Set low for development
-    //     "initialDays": 1
-    //   }
-    // }
+    "db_connection": {
+        "port":3306,
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "seven_peak_track",
+    }
   }
