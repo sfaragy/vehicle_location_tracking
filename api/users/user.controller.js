@@ -20,30 +20,48 @@ module.exports = {
         const body = req.body
 
         const salt = genSaltSync(11)
-        console.log(salt)
+      
         body.password = hashSync(body.password, salt)
 
        
         const user_group_id = 2 // static for the moment
-           
-        create(body, user_group_id, (err, results)=>{
+
+        getUserByEmail(body.email, (err, results_email)=>{
             if(err){
                 console.log(err)
-                return res.status(500).json({
-                    success: 0,
-                    message: "Database connection error"
-                })
-            }             
-            if(!results){
-                return res.status(400).json({
-                    success:0,
-                    message:"Unable register new user!"
+                return
+            }
+            if(!results_email){
+                create(body, user_group_id, (err, results)=>{
+                    if(err){
+                        console.log(err)
+                        return res.status(500).json({
+                            success: 0,
+                            message: "Database connection error"
+                        })
+                    }             
+                    if(!results){
+                        return res.status(400).json({
+                            success:0,
+                            message:"Unable register new user!"
+                        })
+                    }
+                    return res.status(200).json({
+                        success: 1,
+                        data: results
+                    })
                 })
             }
-            return res.status(200).json({
-                success: 1,
-                data: results
-            })
+
+            if(results_email){
+                console.log("Email address already registered")
+                return res.status(400).json({
+                    success:0,
+                    message:"Email address already registered"
+                })
+            }
+
+
         })
     },
     getUserBySelectedId: (req, res) =>{       
