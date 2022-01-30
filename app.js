@@ -32,8 +32,8 @@ app.use(session({
 // View Engine set as EJS
 app.set('view engine', 'ejs')
 // static asset
-app.use('/static', express.static(path.join(__dirname, 'view/public')))
-app.use('/assets', express.static(path.join(__dirname, 'view/public/assets')))
+app.use('/static', express.static(path.join(__dirname, 'views/assets/public')))
+app.use('/other_assets', express.static(path.join(__dirname, 'views/assets/public/other_assets')))
 
 
 //import routes

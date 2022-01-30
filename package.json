@@ -4,7 +4,8 @@
   "description": "Vehicle tracking system will track the vehicle location every 10 seconds through GPS",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "tailwind:css": "npx tailwindcss -i ./views/assets/tailwindcss/source/input.css -o ./views/assets/public/output.css --watch"
   },
   "author": "Soliman Faragy",
   "license": "ISC",

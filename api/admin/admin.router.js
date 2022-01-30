@@ -11,7 +11,8 @@ router.get('/login', (req,res)=>{
 }) 
 
 router.post("/adminLoginAuthentication", adminLoginAuthentication)
-router.get("/dashboard", (req, res)=>{
+router.get("/dashboard", validateToken, (req, res)=>{
+    
     res.render('admin/dashboard', {})
 })
 

@@ -4,6 +4,10 @@ const { verify } = require('jsonwebtoken')
 module.exports = {
     validateToken: (req, res, next) =>{
         let token = req.get("authorization")
+        if(!token){
+            token  = req.session.present_web_token
+        }
+        console.log(token)
         if(token){
             const original_token = token.slice(7)
             verify(original_token, process.env.JWT_SECRET, (err, decoded_token) =>{
