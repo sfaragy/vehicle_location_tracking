@@ -11,12 +11,6 @@ const {
 // bcrypt for data encryption
 const { genSaltSync, hashSync, compareSync } = require("bcrypt")
 
-// db connection
-const pool = require("../../config/database_connect")
-
-// Environment variable configuration
-const { config } = require("dotenv")
-
 // JWT for json web token
 const { sign } = require("jsonwebtoken")
 
@@ -29,7 +23,10 @@ module.exports = {
         console.log(salt)
         body.password = hashSync(body.password, salt)
 
-        create(body, (err, results)=>{
+       
+        const user_group_id = 2 // static for the moment
+           
+        create(body, user_group_id, (err, results)=>{
             if(err){
                 console.log(err)
                 return res.status(500).json({
@@ -49,8 +46,8 @@ module.exports = {
             })
         })
     },
-    getUserBySelectedId: (req, res) =>{
-        const user_id = req.params.user_id 
+    getUserBySelectedId: (req, res) =>{       
+        const user_id = req.jwt_user_id
         getUserById(user_id, (err, results) =>{
             if(err){
                 console.log(err)
@@ -71,7 +68,15 @@ module.exports = {
         })
     },
     getAllUsers: (req, res) =>{
-        getUsers((err,results) =>{
+        const user_group_id = req.jwt_group_id
+        console.log(user_group_id)
+        getUsers(user_group_id, (err,results) =>{
+            if(user_group_id!=1){
+                return res.status(401).json({
+                    success: 0,
+                    message: "Unauthorized access request"
+                })
+            }
             if(err){
                 console.log(err)
                 return
@@ -91,10 +96,9 @@ module.exports = {
     },
     updateSelectedUser: (req, res) =>{
         const body = req.body
-        // const salt = genSaltSync(11)
-        // body.password = hashSync(body.password, salt)
-        const user_id = req.params.user_id
-        updateUser(user_id, body, (err, results)=>{
+        const user_group_id = req.jwt_group_id
+        const user_id = req.jwt_user_id
+        updateUser(user_id, user_group_id, body, (err, results)=>{
             if(err){
                 console.log(err)
                 return res.status(406).json({
@@ -120,7 +124,9 @@ module.exports = {
 
         const salt = genSaltSync(11)
         body.password = hashSync(body.password, salt)
-        const user_id = req.params.user_id
+      
+        const user_id = req.jwt_user_id
+
         updatePasswordByUserId(user_id, body, (err, results) => {
             if(err){
                 console.log(err)
@@ -139,8 +145,9 @@ module.exports = {
             
         })
     },
-    deleteUser: (req, res) =>{
-        const user_id = req.params.user_id
+    deleteUser: (req, res) =>{     
+        const user_id = req.jwt_user_id
+
         deleteUser(user_id, (err, results)=>{
             if(err){
                 console.log(err)
@@ -169,6 +176,13 @@ module.exports = {
                 return res.json({
                     success:0,
                     data: "Invalid email or password"
+                })
+            }
+
+            if(results.status==0){
+                return res.json({
+                    success:0,
+                    data: "Inactive User"
                 })
             }
             const is_authorized = compareSync(body.password, results.password)

@@ -1,13 +1,13 @@
-// import pool
+// import databse pool
 const pool = require("../../config/database_connect")
 
 module.exports = {
-   create: (data, callBack)=>{
+    create: (data, user_group_id, callBack)=>{
        pool.query(
            `INSERT INTO users(group_id, email, mobile, password, first_name, last_name, address, status)
            VALUES(?,?,?,?,?,?,?,?)`,
            [
-            data.group_id,
+            user_group_id,
             data.email,
             data.mobile,
             data.password,
@@ -24,10 +24,11 @@ module.exports = {
                return callBack(null, results)
            }
        )
-   },
-   getUsers: callBack =>{
+    },
+   getUsers: (user_group_id, callBack) =>{
+     
         pool.query(
-            `SELECT user_id,group_id, email, mobile, password, first_name, last_name, address, status from users`,
+            `SELECT user_id, group_id, email, mobile, password, first_name, last_name, address, status from users `,
             [],
             (err, results, fields) =>{
                 if(err){
@@ -54,12 +55,12 @@ module.exports = {
              }
  
          )
-     },
-    updateUser: (user_id, data, callBack) =>{
+    },
+    updateUser: (user_id, user_group_id, data, callBack) =>{
         pool.query(
             `UPDATE users SET group_id = ?, email = ?, mobile = ?, first_name = ?, last_name = ?, address = ?, status = ? WHERE user_id = ?`,
             [ 
-                data.group_id,
+                user_group_id,
                 data.email,
                 data.mobile,
                 data.first_name,
@@ -72,7 +73,7 @@ module.exports = {
                 if(err){
                     return callBack(err)
                 }
-                return callBack(null, results[0])
+                return callBack(null, results)
             }
 
         )
@@ -121,5 +122,5 @@ module.exports = {
              }
  
          )
-     }
+    }
 }

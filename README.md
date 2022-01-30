@@ -1,1 +1,1 @@
-# A test application that will interact to keep vehical tracking. Developed for SevenPeak, BKK as a demo project
+# A test application that will interact to keep vehicle tracking. Developed for SevenPeaks, BKK as a demo project

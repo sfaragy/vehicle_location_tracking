@@ -7,20 +7,19 @@ const {
     deleteUser,
     getAuthToken
  } = require("./user.controller")
-const { getUsers } = require("./user.service")
+// const { getUsers } = require("./user.service")
 
 
 const router = require("express").Router()
 
-// const { validateToken } = require("../../api/auth/auth_verify_by_jwt")
 const { validateToken } = require("../../api/auth/auth_verify_by_jwt")
 
-router.post("/register", validateToken, createUser)
+router.post("/register", createUser)
 router.get("/getAllUsers", validateToken, getAllUsers)
-router.get("/getUser/:user_id", validateToken, getUserBySelectedId)
-router.patch("/updateUser/:user_id", validateToken, updateSelectedUser)
-router.patch("/resetPassword/:user_id", validateToken, resetPassword)
-router.delete("/deleteUser/:user_id", validateToken, deleteUser)
+router.get("/getUser", validateToken, getUserBySelectedId)
+router.patch("/updateUser", validateToken, updateSelectedUser)
+router.patch("/resetPassword", validateToken, resetPassword)
+router.delete("/deleteUser", validateToken, deleteUser)
 router.post("/getAuthToken", getAuthToken)
 
 module.exports = router

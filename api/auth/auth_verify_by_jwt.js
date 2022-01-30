@@ -13,6 +13,17 @@ module.exports = {
                         message: "Invalid token!"
                     })
                 } else {
+                    const usertoken = req.headers.authorization;
+                    const token = usertoken.split(' ')
+                    const decoded_token_i = verify(token[1], process.env.JWT_SECRET)
+                    // console.log(decoded_token_i)
+                    req.jwt_user_id = decoded_token_i.result.user_id; 
+                    req.jwt_group_id = decoded_token_i.result.group_id; 
+                    req.jwt_email = decoded_token_i.result.email; 
+                    req.jwt_mobile = decoded_token_i.result.mobile; 
+                    req.jwt_first_name = decoded_token_i.result.first_name; 
+                    req.jwt_last_name = decoded_token_i.result.last_name; 
+                    // console.log(req.jwt_email)
                     next()
                 }
             })

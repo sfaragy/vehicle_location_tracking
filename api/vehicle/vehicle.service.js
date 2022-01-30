@@ -1,5 +1,22 @@
 const pool = require("../../config/database_connect")
 // in future we can do PoolCluster
+
+
+function getALlListsOfVehiclesByUserId(req, res, next ) {
+    pool.query("SELECT vehicle_id FROM vehicle WHERE user_id=?",[req.jwt_user_id], function (err, rows) {
+        req.custom_records = rows;
+        next();
+    })
+}
+
+
+function getLocationId(req, res, next ) {
+    pool.query("SELECT location_id FROM locations WHERE vehicle_id=?",[req.body.vehicle_id], function (err, rows) {
+        req.custom_location_id = rows;
+        next();
+    })
+}
+
 module.exports = {
     addVehicleInList: (data, jwt_user_id, callBack) =>{
     
@@ -59,8 +76,8 @@ module.exports = {
             }
         )
     },
-    getAllVehiclesOfUser: (data, jwt_user_id, callBack)=>{
-        let user_id = data.user_id
+    getAllVehiclesOfUser: (jwt_user_id, callBack)=>{
+        
         pool.query(
             `SELECT * FROM vehicle WHERE user_id= ?`,
             [
@@ -88,6 +105,54 @@ module.exports = {
                 return callBack(null, results)
             }
         )
-    }
+    },
+    logLocation: (data, vehicle_id_array, callBack)=>{
+
+        let authorized_vehicle_id = vehicle_id_array.some(function(item) {
+            return item.vehicle_id === data.vehicle_id
+          });
+
+        if(authorized_vehicle_id==false){
+            return callBack("Unauthorized vehicle trying to update timelog") 
+        }
+
+        
+        pool.query(
+            `INSERT INTO locations(vehicle_id, longitude, latitude) VALUES(?, ?, ?)`,
+            [
+                data.vehicle_id,
+                data.longitude,
+                data.latitude
+            ],
+            (err, results, fields)=>{
+                if(err){
+                    return callBack(err)
+                }
+
+                return callBack(null, results)
+
+
+            }
+        )
+
+        pool.query(
+            `INSERT INTO time_location(vehicle_id, longitude, latitude) VALUES(?, ?, ?)`,
+            [
+                data.vehicle_id,
+                data.longitude,
+                data.latitude
+            ],
+            (err, results, fields)=>{
+                if(err){
+                    return callBack(err)
+                }
+
+                return callBack(null, results)
+
+
+            }
+        )
+    },
+    getALlListsOfVehiclesByUserId: getALlListsOfVehiclesByUserId
 
 }

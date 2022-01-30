@@ -3,8 +3,10 @@ const {
     updateVehicleByVehicleId,
     deleteVehicleById,
     getAllVehiclesOfUser,
-    getVehicleByVehicleId
+    getVehicleByVehicleId,
+    logLocation
  } = require("../vehicle/vehicle.service")
+
 
 const dotenv = require("dotenv")
 const { create } = require("../users/user.service")
@@ -123,11 +125,48 @@ module.exports = {
                     message: "Unable to get information"
                 })
             }
+            if(results.length==0){
+                return res.status(400).json({
+                    success: 0,
+                    message: "You have not added such a vehicle yet"
+                })
+            }
 
             return res.status(200).json({
                 success: 1,
                 data: results
             })
         })
+    },
+    logLocation: (req, res) =>{
+       
+        const body = req.body
+        const vehicle_ids_array = Object.values(JSON.parse(JSON.stringify(req.custom_records)))
+        // console.log(req.custom_records)
+        // console.log(vehicle_ids_array)
+        // console.log(body)
+        logLocation(body,
+            vehicle_ids_array,
+            (err, results)=>{
+                if(err){
+                    return res.status(400).json({
+                        success: 0,
+                        message: err
+                    })
+                }
+                if(!results){
+                    return res.status(400).json({
+                        success: 0,
+                        message: "Unable to update information"
+                    })
+                }
+               
+                return res.status(200).json({
+                    success: 1,
+                    data: results
+                })
+        })
     }
+
+    
 }
