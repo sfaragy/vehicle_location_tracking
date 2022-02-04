@@ -8,6 +8,7 @@ const mysql = require('mysql')
 const path = require('path')
 const bodyparser = require('body-parser')
 const session = require('express-session')
+const cookieParser = require("cookie-parser")
 const {v4:uuidv4} = require('uuid')
 // ----------
 
@@ -20,6 +21,7 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({
     extended:true
 }))
+app.use(cookieParser());
 
 app.use(session({
     secret: uuidv4(),
@@ -28,12 +30,13 @@ app.use(session({
 }))
 
 // ------------
-
+// dashboard template credit: https://www.tailwindtoolbox.com/templates/minimal-admin-template
 // View Engine set as EJS
 app.set('view engine', 'ejs')
 // static asset
 app.use('/static', express.static(path.join(__dirname, 'views/assets/public')))
 app.use('/other_assets', express.static(path.join(__dirname, 'views/assets/public/other_assets')))
+
 
 
 //import routes

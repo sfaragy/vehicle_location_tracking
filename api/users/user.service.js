@@ -108,7 +108,7 @@ module.exports = {
             }
         )
     },
-    getUserByEmail: (email, callBack) =>{
+    getUserByEmail: (email, callBack) => { 
          pool.query(
              `SELECT user_id,group_id, email, mobile, password, first_name, last_name, address, status FROM users WHERE email = ?`,
              [email],
@@ -119,8 +119,7 @@ module.exports = {
                      )
                  }
                  return callBack(null, results[0])
-             }
- 
+             } 
          )
     }
 }
