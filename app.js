@@ -53,6 +53,11 @@ app.use("/admin", adminRouter)
 
 
 
+
+app.get('*', function(req, res){
+    res.status(404).send("404 Not Found")
+  });
+
 app.listen(port, () =>{
     console.log(`App started at the following port & URL http://localhost:${port}`)
 })

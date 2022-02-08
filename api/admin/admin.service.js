@@ -56,4 +56,21 @@ module.exports = {
             }
         ) 
     },
+    vehicleLocationsById: (vehicle_id, callBack)=>{
+        pool.query(
+            `SELECT *, CONCAT(L.longitude,',',L.latitude) as present_location, TL.time_log   
+                FROM locations L LEFT JOIN time_location TL 
+                ON L.id = TL.location_id WHERE L.vehicle_id=? ORDER BY L.id DESC`,
+            [
+                vehicle_id
+            ],
+            (err, results, fields)=>{ 
+                if(err){
+                    console.log(err)
+                    return callBack(err)
+                }
+                return callBack(null, results) 
+            }
+        ) 
+    }
 }

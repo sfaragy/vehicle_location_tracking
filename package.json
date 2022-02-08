@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "tailwind:css": "npx tailwindcss -i ./views/assets/tailwindcss/source/input.css -o ./views/assets/public/output.css --watch"
+    "tailwind:css": "npx tailwindcss -i ./views/assets/tailwindcss/source/input.css -o ./views/assets/public/output.css"
   },
   "author": "Soliman Faragy",
   "license": "ISC",

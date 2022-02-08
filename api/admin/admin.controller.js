@@ -1,4 +1,9 @@
-const { getDashboardData, getAllVehiclesList, getTotalsOfAllVehiclesList } = require("../admin/admin.service")
+const { 
+    getDashboardData, 
+    getAllVehiclesList, 
+    getTotalsOfAllVehiclesList,
+    vehicleLocationsById
+ } = require("../admin/admin.service")
 const { getUserByEmail } = require("../users/user.service")
 const { getAllVehicles } = require("../vehicle/vehicle.controller")
 const Pagination = require("../admin/pagination")
@@ -105,26 +110,17 @@ module.exports = {
      getVehicleLocations: (req, res)=>{
         const ITEMS_PER_PAGE = 5
 
-        let page_no = req.params.vehicle_id
-        if(!req.params.page_id){
-            page_no = 1 
+        let vehicle_id = req.params.vehicle_id
+        if(!req.params.vehicle_id){
+            res.status(404).send("404 Not Found")
         }
-        getTotalsOfAllVehiclesList((err, results_total)=>{
-               let total_row = Object.values(JSON.parse(JSON.stringify(results_total)))[0].total_record
 
-               getAllVehiclesList(page_no, ITEMS_PER_PAGE, (err, results)=>{  
-                   let filter_item = req.body.filter_item
-                const vehicles_list = Object.values(JSON.parse(JSON.stringify(results)));
-                // vehicles_list = vehicles_list.filter(function(filter_item) {
-                //     return (filter_item == vehicles_list.vehicle_id || filter_id==vehicles_list.first_name);
-                //   });
-                let pagination = new Pagination(total_row, page_no, '/admin/vehicles/', ITEMS_PER_PAGE)
-                let pagination_links = pagination.links()
-                // console.log(pagination)
-          
-                res.render('admin/vehicles', {vehicles_list: vehicles_list, pagination_links: pagination_links, title:"Vehicle List",})
-           })
-
+        vehicleLocationsById(vehicle_id, (err, results)=>{
+            if(err){ 
+                res.status(404).send("404 Not Found")
+            }
+            let location_list = Object.values(JSON.parse(JSON.stringify(results)));
+            res.render('admin/vehicle_locations', {location_list: location_list, vehicle_id:vehicle_id, title:"Vehicle Locations Log",})
         })
      },
      logout: (req, res)=>{
