@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "test": "mocha",
     "tailwind:css": "npx tailwindcss -i ./views/assets/tailwindcss/source/input.css -o ./views/assets/public/output.css"
   },
   "author": "Soliman Faragy",
@@ -25,9 +26,12 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15",
     "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.18",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "tailwindcss": "^3.0.18"
+    "chai": "^1.10.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^1.21.5"
   }
 }

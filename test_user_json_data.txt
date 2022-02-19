@@ -1,0 +1,65 @@
+{
+    "group_id": "2",
+    "email": "driver1@spdt.com",
+    "mobile": "12345677",
+    "password": "1234",
+    "first_name": "Driver1",
+    "last_name": "Dr1",
+    "address": "Daddress1",
+    "status": "1"
+}
+
+
+// console.log(process.env.PORT)
+// console.log(config.get('host_config.host'))
+// https://medium.com/swlh/developing-a-microservice-to-handle-over-30k-requests-per-second-at-ifood-3e2d7b822b0e
+// https://www.youtube.com/watch?v=Ogjb60Fg10A
+
+// microservice but now we are going with monolithic architecture. 
+
+// loader tool to test request load
+
+Data modeling
+https://dbdesigner.page.link/DZXXWUwYNdAkEfcg7
+
+
+                // npm install moment
+
+            // return res.status(400).json({
+                //     success: 0,
+                //     message: "Not Empty"
+                // })
+
+                // var last_date_location = last_date[0].date
+             
+                // var last_date_location = typeof last_date_location !== 'undefined' ? last_date_location : "2014-01-01 01:02:03.123456";
+                // console.log(last_date_location)
+                // var last_date_location = new Date( last_date_location )
+                // console.log(last_date_location)
+                // last_date_location = Math.floor(last_date_location/1000)
+                // var time_now = new Date() 
+              
+                // time_now = moment(time_now).format('YYYY-MM-DD HH:mm:ss');
+                // // var time_now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+                // console.log(time_now)
+                // time_now = Math.floor(time_now/1000) 
+                // console.log(time_now)
+                // // console.log(time_now + " Current Time")
+                // if( isNaN(last_date_location) )
+                // {
+                //     return "";
+                // }
+
+                // console.log( last_date_location + " " + time_now);
+
+                // if (last_date_location < time_now) {
+                //     var milisec_diff = time_now - last_date_location;
+                // }else{
+                //     var milisec_diff = last_date_location - time_now;
+                // }
+
+                // var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));
+
+                // var date_diff = new Date( milisec_diff );
+
+                // console.log(days + " Days "+ date_diff.getHours() + " Hours " + date_diff.getMinutes() + " Minutes " + date_diff.getSeconds() + " Seconds")
